@@ -1,0 +1,18 @@
+{% extends "catalogo/base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 1.5rem;">Catálogo de Productos</h2>
+{% if productos %}
+<div class="grid">
+    {% for producto in productos %}
+    <div class="card">
+        <h3>{{ producto.nombre }}</h3>
+        <p>{{ producto.descripcion }}</p>
+        <p class="precio">${{ producto.precio }}</p>
+        <p class="stock">Stock: {{ producto.stock }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="vacío">No hay productos disponibles o la API no está en línea.</p>
+{% endif %}
+{% endblock %}
