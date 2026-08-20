@@ -5,6 +5,12 @@ Sistema web híbrido para una tienda de hardware y accesorios tecnológicos.
 - **`techgear_api/`** — microservicio REST construido con **FastAPI** que administra el inventario y los pedidos sobre **MongoDB Atlas**, documentado con **Swagger UI**.
 - **`techgear_web/`** — portal web construido con **Django** (patrón MVT) que consume la API mediante peticiones HTTP con la librería `requests` para mostrar el catálogo y permitir la creación de pedidos.
 
+## Enlaces de producción
+
+- **API (FastAPI):** https://techgear-api.onrender.com
+- **Documentación Swagger UI:** https://techgear-api.onrender.com/docs
+- **Portal web (Django):** https://techgear-web.onrender.com/
+
 ---
 
 ## Arquitectura
