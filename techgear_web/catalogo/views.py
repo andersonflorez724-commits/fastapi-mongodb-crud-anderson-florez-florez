@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from .services import get_productos, get_pedidos, crear_pedido
+from .services import get_productos, get_pedidos, crear_pedido as crear_pedido_api
 
 
 def catalogo(request):
@@ -34,7 +34,7 @@ def crear_pedido(request):
             messages.error(request, "La cantidad debe ser mayor a cero.")
             return redirect("crear_pedido")
 
-        resultado = crear_pedido(cliente, [{"producto_id": producto_id, "cantidad": cantidad}])
+        resultado = crear_pedido_api(cliente, [{"producto_id": producto_id, "cantidad": cantidad}])
 
         if resultado["ok"]:
             messages.success(request, resultado["detail"])
