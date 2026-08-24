@@ -80,6 +80,7 @@ python manage.py runserver 8001
 |---|---|
 | Catálogo de productos | http://localhost:8001/ |
 | Crear pedido | http://localhost:8001/crear-pedido/ |
+| Ver pedidos | http://localhost:8001/pedidos/ |
 
 ---
 

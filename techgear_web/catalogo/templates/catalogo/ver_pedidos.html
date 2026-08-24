@@ -1,0 +1,24 @@
+{% extends "catalogo/base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 1.5rem;">Pedidos Registrados</h2>
+{% if pedidos %}
+<div class="grid">
+    {% for pedido in pedidos %}
+    <div class="card">
+        <h3>Pedido #{{ pedido.id|truncatechars:8 }}</h3>
+        <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+        <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+        <p><strong>Total:</strong> ${{ pedido.total }}</p>
+        <p><strong>Productos:</strong></p>
+        <ul>
+            {% for item in pedido.productos %}
+            <li>{{ item.producto_id|truncatechars:10 }} — {{ item.cantidad }} x ${{ item.precio_unitario }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="vacío">No hay pedidos registrados o la API no está en línea.</p>
+{% endif %}
+{% endblock %}

@@ -126,7 +126,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-# Email
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
 MAILERS = {

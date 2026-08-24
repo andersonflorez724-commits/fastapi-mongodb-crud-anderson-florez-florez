@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from .services import get_productos, crear_pedido
+from .services import get_productos, get_pedidos, crear_pedido
 
 
 def catalogo(request):
     productos = get_productos()
     return render(request, "catalogo/catalogo.html", {"productos": productos})
+
+
+def ver_pedidos(request):
+    pedidos = get_pedidos()
+    return render(request, "catalogo/ver_pedidos.html", {"pedidos": pedidos})
 
 
 def crear_pedido(request):

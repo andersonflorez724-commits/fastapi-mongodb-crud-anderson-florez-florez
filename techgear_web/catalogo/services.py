@@ -26,6 +26,18 @@ def get_producto(producto_id):
         return None
 
 
+def get_pedidos():
+    try:
+        response = requests.get(
+            f"{settings.TECHGEAR_API_BASE_URL}/pedidos",
+            timeout=settings.TECHGEAR_API_TIMEOUT,
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException:
+        return []
+
+
 def crear_pedido(cliente, items):
     detalle = []
     for item in items:
