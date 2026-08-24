@@ -47,6 +47,26 @@ async def obtener_producto_por_id(producto_id: str):
 
 @app.post("/pedidos", response_model=PedidoResponse, status_code=status.HTTP_201_CREATED)
 async def crear_pedido(pedido: PedidoCreate):
+    # Validar stock y descontar de cada producto
+    for item in pedido.productos:
+        if not ObjectId.is_valid(item.producto_id):
+            raise HTTPException(status_code=400, detail=f"ID de producto no válido: {item.producto_id}")
+
+        producto = await productos_collection.find_one({"_id": ObjectId(item.producto_id)})
+        if not producto:
+            raise HTTPException(status_code=404, detail=f"Producto {item.producto_id} no encontrado")
+
+        if producto["stock"] < item.cantidad:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Stock insuficiente para '{producto["nombre"]}'. Disponible: {producto["stock"]}, solicitado: {item.cantidad}",
+            )
+
+        await productos_collection.update_one(
+            {"_id": ObjectId(item.producto_id)},
+            {"$inc": {"stock": -item.cantidad}},
+        )
+
     nuevo = await pedidos_collection.insert_one(pedido.model_dump())
     creado = await pedidos_collection.find_one({"_id": nuevo.inserted_id})
     return format_doc(creado)
