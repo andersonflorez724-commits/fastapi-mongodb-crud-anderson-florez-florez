@@ -33,9 +33,17 @@ def get_pedidos():
             timeout=settings.TECHGEAR_API_TIMEOUT,
         )
         response.raise_for_status()
-        return response.json()
+        pedidos = response.json()
     except requests.RequestException:
         return []
+
+    # Enriquecer cada detalle de pedido con el nombre del producto
+    productos = get_productos()
+    mapa = {p["id"]: p["nombre"] for p in productos}
+    for pedido in pedidos:
+        for item in pedido.get("productos", []):
+            item["producto_nombre"] = mapa.get(item["producto_id"], item["producto_id"])
+    return pedidos
 
 
 def crear_pedido(cliente, items):

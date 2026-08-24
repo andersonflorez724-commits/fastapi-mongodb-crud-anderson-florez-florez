@@ -12,7 +12,7 @@
         <p><strong>Productos:</strong></p>
         <ul>
             {% for item in pedido.productos %}
-            <li>{{ item.producto_id|truncatechars:10 }} — {{ item.cantidad }} x ${{ item.precio_unitario }}</li>
+            <li>{{ item.producto_nombre }} — {{ item.cantidad }} x ${{ item.precio_unitario }}</li>
             {% endfor %}
         </ul>
     </div>
