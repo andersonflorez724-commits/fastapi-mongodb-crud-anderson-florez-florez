@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-5u&d=r!j1((2&z)-%qb
 DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in ("true", "1", "yes")
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS += [".onrender.com"]
 
 # URL base de la API FastAPI (techgear_api)
 TECHGEAR_API_BASE_URL = os.getenv("TECHGEAR_API_BASE_URL", "http://localhost:8000")
@@ -124,6 +125,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
 
 
 # Default primary key field type
