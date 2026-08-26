@@ -1,0 +1,40 @@
+{% extends "catalogo/base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 1.5rem;">Detalle del Pedido</h2>
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <h3>Pedido #{{ pedido.id|truncatechars:12 }}</h3>
+    <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+    <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+    <p><strong>Total:</strong> <span class="precio">${{ pedido.total }}</span></p>
+
+    <h3 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">Productos</h3>
+    {% if pedido.productos %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid #e5e7eb;">
+                <th style="text-align: left; padding: 0.5rem;">Producto</th>
+                <th style="text-align: right; padding: 0.5rem;">Cantidad</th>
+                <th style="text-align: right; padding: 0.5rem;">P. Unitario</th>
+                <th style="text-align: right; padding: 0.5rem;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in pedido.productos %}
+            <tr style="border-bottom: 1px solid #f3f4f6;">
+                <td style="padding: 0.5rem;">{{ item.producto_nombre }}</td>
+                <td style="text-align: right; padding: 0.5rem;">{{ item.cantidad }}</td>
+                <td style="text-align: right; padding: 0.5rem;">${{ item.precio_unitario }}</td>
+                <td style="text-align: right; padding: 0.5rem;">${{ item.precio_unitario }} x {{ item.cantidad }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="vacío">No hay productos en este pedido.</p>
+    {% endif %}
+
+    <div style="margin-top: 1.5rem;">
+        <a href="{% url 'ver_pedidos' %}" style="color: #2563eb; text-decoration: none;">← Volver a pedidos</a>
+    </div>
+</div>
+{% endblock %}

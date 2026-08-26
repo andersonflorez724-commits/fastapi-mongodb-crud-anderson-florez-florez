@@ -77,3 +77,82 @@ def crear_pedido(cliente, items):
         }
     except requests.RequestException as exc:
         return {"ok": False, "detail": f"No se pudo conectar con la API: {exc}"}
+
+
+# ==================== CRUD PRODUCTOS ====================
+
+def crear_producto(nombre, descripcion, precio, stock):
+    payload = {
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "precio": precio,
+        "stock": stock,
+    }
+    try:
+        response = requests.post(
+            f"{settings.TECHGEAR_API_BASE_URL}/productos",
+            json=payload,
+            timeout=settings.TECHGEAR_API_TIMEOUT,
+        )
+        return {
+            "ok": response.ok,
+            "detail": "Producto creado exitosamente" if response.ok else response.json().get("detail", "Error al crear el producto"),
+            "data": response.json() if response.ok else None,
+        }
+    except requests.RequestException as exc:
+        return {"ok": False, "detail": f"No se pudo conectar con la API: {exc}"}
+
+
+def actualizar_producto(producto_id, nombre, descripcion, precio, stock):
+    payload = {
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "precio": precio,
+        "stock": stock,
+    }
+    try:
+        response = requests.put(
+            f"{settings.TECHGEAR_API_BASE_URL}/productos/{producto_id}",
+            json=payload,
+            timeout=settings.TECHGEAR_API_TIMEOUT,
+        )
+        return {
+            "ok": response.ok,
+            "detail": "Producto actualizado exitosamente" if response.ok else response.json().get("detail", "Error al actualizar el producto"),
+            "data": response.json() if response.ok else None,
+        }
+    except requests.RequestException as exc:
+        return {"ok": False, "detail": f"No se pudo conectar con la API: {exc}"}
+
+
+def eliminar_producto(producto_id):
+    try:
+        response = requests.delete(
+            f"{settings.TECHGEAR_API_BASE_URL}/productos/{producto_id}",
+            timeout=settings.TECHGEAR_API_TIMEOUT,
+        )
+        return {
+            "ok": response.ok,
+            "detail": "Producto eliminado exitosamente" if response.ok else response.json().get("detail", "Error al eliminar el producto"),
+        }
+    except requests.RequestException as exc:
+        return {"ok": False, "detail": f"No se pudo conectar con la API: {exc}"}
+
+
+def get_pedido(pedido_id):
+    try:
+        response = requests.get(
+            f"{settings.TECHGEAR_API_BASE_URL}/pedidos/{pedido_id}",
+            timeout=settings.TECHGEAR_API_TIMEOUT,
+        )
+        response.raise_for_status()
+        pedido = response.json()
+    except requests.RequestException:
+        return None
+
+    # Enriquecer con nombres de productos
+    productos = get_productos()
+    mapa = {p["id"]: p["nombre"] for p in productos}
+    for item in pedido.get("productos", []):
+        item["producto_nombre"] = mapa.get(item["producto_id"], item["producto_id"])
+    return pedido

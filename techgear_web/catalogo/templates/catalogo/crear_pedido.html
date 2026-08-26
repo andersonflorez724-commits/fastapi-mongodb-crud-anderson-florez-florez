@@ -1,7 +1,7 @@
 {% extends "catalogo/base.html" %}
 {% block content %}
 <h2 style="margin-bottom: 1.5rem;">Crear Pedido</h2>
-<form method="post">
+<form method="post" class="formulario">
     {% csrf_token %}
     <label for="cliente">Nombre del cliente</label>
     <input type="text" id="cliente" name="cliente" required>

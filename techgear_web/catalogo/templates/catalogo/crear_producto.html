@@ -1,0 +1,21 @@
+{% extends "catalogo/base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 1.5rem;">Crear Producto</h2>
+<form method="post" class="formulario">
+    {% csrf_token %}
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" required placeholder="Ej: Laptop Gamer X">
+
+    <label for="descripcion">Descripción</label>
+    <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del producto">
+
+    <label for="precio">Precio ($)</label>
+    <input type="number" id="precio" name="precio" step="0.01" min="0.01" required placeholder="99.99">
+
+    <label for="stock">Stock</label>
+    <input type="number" id="stock" name="stock" min="0" value="0" required>
+
+    <button type="submit">Crear Producto</button>
+    <a href="{% url 'catalogo' %}" style="display: inline-block; margin-left: 1rem; color: #6b7280; text-decoration: none;">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+    "build": [
+    {
+      "src": "techgear_web/wsgi.py",
+      "use": "@vercel/python"
+    }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "techgear_web/wsgi.py"
+      }
+    ]
+}

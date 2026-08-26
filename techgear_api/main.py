@@ -78,6 +78,15 @@ async def obtener_pedidos():
         pedidos.append(format_doc(doc))
     return pedidos
 
+@app.get("/pedidos/{pedido_id}", response_model=PedidoResponse)
+async def obtener_pedido_por_id(pedido_id: str):
+    if not ObjectId.is_valid(pedido_id):
+        raise HTTPException(status_code=400, detail="ID no válido")
+    doc = await pedidos_collection.find_one({"_id": ObjectId(pedido_id)})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Pedido no encontrado")
+    return format_doc(doc)
+
 @app.put("/productos/{producto_id}", response_model=ProductoResponse)
 async def actualizar_producto(producto_id: str, producto: ProductoCreate):
     if not ObjectId.is_valid(producto_id):

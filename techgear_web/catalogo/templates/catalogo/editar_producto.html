@@ -1,0 +1,21 @@
+{% extends "catalogo/base.html" %}
+{% block content %}
+<h2 style="margin-bottom: 1.5rem;">Editar Producto</h2>
+<form method="post" class="formulario">
+    {% csrf_token %}
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" value="{{ producto.nombre }}" required>
+
+    <label for="descripcion">Descripción</label>
+    <input type="text" id="descripcion" name="descripcion" value="{{ producto.descripcion|default:'' }}">
+
+    <label for="precio">Precio ($)</label>
+    <input type="number" id="precio" name="precio" step="0.01" min="0.01" value="{{ producto.precio }}" required>
+
+    <label for="stock">Stock</label>
+    <input type="number" id="stock" name="stock" min="0" value="{{ producto.stock }}" required>
+
+    <button type="submit">Guardar Cambios</button>
+    <a href="{% url 'catalogo' %}" style="display: inline-block; margin-left: 1rem; color: #6b7280; text-decoration: none;">Cancelar</a>
+</form>
+{% endblock %}

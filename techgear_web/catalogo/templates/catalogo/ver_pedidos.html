@@ -15,6 +15,9 @@
             <li>{{ item.producto_nombre }} — {{ item.cantidad }} x ${{ item.precio_unitario }}</li>
             {% endfor %}
         </ul>
+        <div style="margin-top: 0.75rem;">
+            <a href="{% url 'detalle_pedido' pedido.id %}" style="background: #2563eb; color: #fff; padding: 0.4rem 0.8rem; border-radius: 4px; text-decoration: none; font-size: 0.85rem;">Ver Detalle</a>
+        </div>
     </div>
     {% endfor %}
 </div>
