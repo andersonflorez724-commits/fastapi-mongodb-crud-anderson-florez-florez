@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api:
+    name: API — Build & Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: techgear_api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python -c "from main import app; print('API OK')"
+
+  web:
+    name: Web — Build & Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: techgear_web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python manage.py check --fail-level CRITICAL

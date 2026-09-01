@@ -59,7 +59,7 @@ async def crear_pedido(pedido: PedidoCreate):
         if producto["stock"] < item.cantidad:
             raise HTTPException(
                 status_code=400,
-                detail=f"Stock insuficiente para '{producto["nombre"]}'. Disponible: {producto["stock"]}, solicitado: {item.cantidad}",
+                detail=f"Stock insuficiente para '{producto['nombre']}'. Disponible: {producto['stock']}, solicitado: {item.cantidad}",
             )
 
         await productos_collection.update_one(
